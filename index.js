@@ -1,11 +1,13 @@
 const express = require('express');
 const livrosRoutes = require('./src/routes/livros.routes');
+const usuariosRoutes = require('./src/routes/usuarios.routes');
 const app = express();
 
 app.use(express.json());
 
 //registro de notas
 app.use('/livros', livrosRoutes);
+app.use('/usuarios', usuariosRoutes);
 
 app.get('/', (req, res) => {
     res.json({
