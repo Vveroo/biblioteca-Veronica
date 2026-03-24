@@ -30,6 +30,20 @@ const buscarPorId = async (id) => {
     return livro || null;
 };
 
+const criarLivro = async (titulo, autor) => {
+    if (!titulo || !autor) {
+        throw new Error('Título e autor são obrigatórios');
+    }
+    const novoLivro = {
+        id: acervo.length + 1,
+        titulo,
+        autor,
+        disponivel: true,
+    };
+    acervo.push(novoLivro);
+    return novoLivro;
+};
+
 module.exports = {
-    listarTodosLivros, buscarPorId
+    listarTodosLivros, buscarPorId, criarLivro
 };

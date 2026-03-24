@@ -15,3 +15,29 @@ const usuarios = [
         email: 'mariana.oliveira@email.com',
     },
 ];
+
+const listarTodosUsuarios = async () => {
+    return usuarios;
+};
+
+const buscarUsuarioPorId = async (id) => {
+    const usuario = usuarios.find(item => item.id === Number(id));
+    return usuario || null;
+};
+
+const criarUsuario = async (nome, email) => {
+    if (!nome || !email) {
+        throw new Error('Nome e email são obrigatórios');
+    }
+    const novoUsuario = {
+        id: usuarios.length + 1,    
+        nome,
+        email,
+    };
+    usuarios.push(novoUsuario);
+    return novoUsuario;
+};
+
+module.exports = {
+    listarTodosUsuarios, buscarUsuarioPorId, criarUsuario
+};
