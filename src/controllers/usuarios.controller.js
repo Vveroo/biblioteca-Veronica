@@ -10,6 +10,20 @@ const listarUsuarios = async (req, res) => {
     }
 };
 
+const buscarUsuarioPorId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const usuario = await usuariosService.buscarPorId(id);
+        if (usuario) {
+            res.status(200).json(usuario);
+        } else {
+            res.status(404).json({ erro: 'Usuario não encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ erro: 'Erro interno ao buscar usuario' });
+    }
+};
+
 //post usuario
 const criarUsuarios = async (req, res) => {
     try {
@@ -21,4 +35,4 @@ const criarUsuarios = async (req, res) => {
     }
 };
 
-module.exports = { listarUsuarios, criarUsuarios };
+module.exports = { listarUsuarios, criarUsuarios, buscarUsuarioPorId };
