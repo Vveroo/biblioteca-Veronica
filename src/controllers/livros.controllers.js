@@ -25,4 +25,15 @@ const buscarLivroPorId = async (req, res) => {
     }
 };
 
-module.exports = {listarLivros, buscarLivroPorId};
+//post criar livro
+const criarLivro = async (req, res) => {
+    try {
+        const { titulo, autor } = req.body;
+        const livro = await livrosService.criarLivro(titulo, autor);
+        res.status(201).json({ mensagem: 'Livro criado com sucesso', livro });
+    } catch (error) {
+        res.status(400).json({ erro: error.message });
+    }
+};
+
+module.exports = {listarLivros, buscarLivroPorId, criarLivro};
