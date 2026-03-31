@@ -1,11 +1,19 @@
 const express = require('express');
 const livrosRoutes = require('./src/routes/livros.routes');
 const usuariosRoutes = require('./src/routes/usuarios.routes');
+const {logger, errorHandler} = require('./src/middlewares/main.middlewares');
 const app = express();
 
 app.use(express.json());
 
-//registro de notas
+//app.use((req, res, next) => {
+//    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+//    next();
+//});
+
+app.use(logger);
+app.use(errorHandler);
+//registro de rotas
 app.use('/livros', livrosRoutes);
 app.use('/usuarios', usuariosRoutes);
 

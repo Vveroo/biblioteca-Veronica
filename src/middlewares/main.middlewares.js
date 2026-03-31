@@ -1,2 +1,3 @@
 const logger = require('./logger.middleware');
-module.exports = {logger};
+const errorHandler = require('./errorHandler.middleware');
+module.exports = {logger, errorHandler};
