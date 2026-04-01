@@ -3,9 +3,8 @@ const livrosService = require('../services/livros.services');
 //get livros
 const listarLivros = async (req, res, next) => {
     try {
-        return next(new Error('Erro de teste'));
-        //const livros = await livrosService.listarTodosLivros();
-        //res.status(200).json({ total: livros.length, livros });
+        const livros = await livrosService.listarTodosLivros();
+        res.status(200).json({ total: livros.length, livros });
     } catch (erro) {
         next(erro)
     }

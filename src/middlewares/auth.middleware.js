@@ -1,4 +1,4 @@
-const CHAVE_ACESSO = 'biblioteca2024';
+const CHAVE_ACESSO = 'biblioteca2026';
 
 const autenticar = (req, res, next) => {
     const authHEADER = req.headers['authorization'];
@@ -15,3 +15,5 @@ const autenticar = (req, res, next) => {
 
     next();
 };
+
+module.exports = { autenticar };
