@@ -1,33 +1,19 @@
-const acervo = [
-    {
-        id: 1,
-        titulo: '1984',
-        autor: 'George Orwell',
-        disponivel: true,
-    },
-        {
-        id:2,
-        titulo: 'O Hbbit',
-        autor: 'J.R.R. Tolkien',
-        disponivel: true,
-    },
-        {
-        id:3,
-        titulo: 'Outs',
-        autor: 'Sela Almada',
-        disponivel: true,
-    },
-];
-
+const pool = require('../database/connection');
 // listar livros
 const listarTodosLivros = async () => {
-    return acervo;
+    try{
+        const result = await pool.query('SELECT * FROM livros ORDER BY id');
+        return result.rows;
+    } catch (error) {
+        console.error('Erro ao listar livros:', error);
+        throw error;
+    }
 };
 
 //buscar livros ID
 const buscarPorId = async (id) => {
-    const livro = acervo.find(item => item.id=== Number(id));
-    return livro || null;
+    const resultado = await pool.query('SELECT * FROM livros WHERE id = $1', [id]);
+    return resultado.rows[0];
 };
 
 const criarLivro = async (titulo, autor) => {
