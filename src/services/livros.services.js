@@ -2,8 +2,9 @@ const pool = require('../database/connection');
 // listar livros
 const listarTodosLivros = async () => {
     try{
-        const result = await pool.query('SELECT * FROM livros ORDER BY id');
-        return result.rows;
+        const query = 'SELECT livros.id, livros.titulo, livros.autor, livros.isbn, livros.ano_publicacao, categorias.nome AS categoria_nome FROM livros JOIN categorias ON livros.categoria_id = categorias.id ORDER BY livros.id';
+        const resultado = await pool.query(query);
+        return resultado.rows;
     } catch (error) {
         console.error('Erro ao listar livros:', error);
         throw error;
@@ -16,10 +17,10 @@ const buscarPorId = async (id) => {
     return resultado.rows[0];
 };
 
-const criarLivro = async (titulo, autor, isbn, ano_publicacao) => {
+const criarLivro = async (titulo, autor, isbn, ano_publicacao, categoria_id) => {
     try {
-        const query = 'INSERT INTO livros (titulo, autor, isbn, ano_publicacao) VALUES ($1, $2, $3, $4) RETURNING *';
-        const resultado = await pool.query(query, [titulo, autor, isbn, ano_publicacao]);
+        const query = 'INSERT INTO livros (titulo, autor, isbn, ano_publicacao, categoria_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+        const resultado = await pool.query(query, [titulo, autor, isbn, ano_publicacao, categoria_id]);
         return resultado.rows[0];
     } catch (error) {
         if (error.code === '23505') { 
