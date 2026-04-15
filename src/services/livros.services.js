@@ -16,18 +16,18 @@ const buscarPorId = async (id) => {
     return resultado.rows[0];
 };
 
-const criarLivro = async (titulo, autor) => {
-    if (!titulo || !autor) {
-        throw new Error('Título e autor são obrigatórios');
+const criarLivro = async (titulo, autor, isbn, ano_publicacao) => {
+    try {
+        const query = 'INSERT INTO livros (titulo, autor, isbn, ano_publicacao) VALUES ($1, $2, $3, $4) RETURNING *';
+        const resultado = await pool.query(query, [titulo, autor, isbn, ano_publicacao]);
+        return resultado.rows[0];
+    } catch (error) {
+        if (error.code === '23505') { 
+            const error = new Error('ISBN já existe');
+            error.status = 400;
+            throw error;
+        }
     }
-    const novoLivro = {
-        id: acervo.length + 1,
-        titulo,
-        autor,
-        disponivel: true,
-    };
-    acervo.push(novoLivro);
-    return novoLivro;
 };
 
 module.exports = {
